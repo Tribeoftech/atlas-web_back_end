@@ -1,22 +1,44 @@
 #!/usr/bin/env python3
 """
-Function <index_range> takes two integer arguments
-<page> and <page_size>
+2. Hypermedia pagination
+
+Copies in function named `index_range`
+from pagination/0-simple_helper_function.py
+
+Implement a method named `get_page` that takes two integer arguments
+`page` with default value 1 - and - `page_size` with default value 10.
+
+You have to use the CSV file `Popular_Baby_Names.csv`
+
+Use assert to verify that both arguments are integers greater than 0.
+
+Use index_range to find the correct indexes to paginate the dataset correctly
+and return the appropriate page of the dataset (i.e. the correct list of rows).
+
+If the input arguments are out of range for the dataset,
+an empty list should be returned.
 """
-from typing import Union, Tuple, List
+
 import csv
 import math
+from typing import List, Tuple, Dict
 
 
-def index_range(page: int, page_size: int) -> Union[Tuple[int, int], None]:
+def index_range(page: int, page_size: int) -> Tuple[int, int]:
+    """ calculate the start and end index for pagination
+
+    Args:
+        page (int): starting page number
+        page_size (int): the number of items per page
+
+    Returns:
+        Tuple[int, int]: tuple of start and end index
     """
-    -Returns a tuple of size 2 containing a start index and an end index
-    corresponding to the range of indexes to return in a list for those
-    particular pagination parameters.
-    -Page numbers are 1 -indexed, the first page is page 1.
-    """
-    if page and page_size:
-        return (page * page_size - page_size, page * page_size)
+
+    end_index = page * page_size
+    start_index = end_index - page_size
+    return (start_index, end_index)
+# end index_range method
 
 
 class Server:
@@ -26,6 +48,7 @@ class Server:
 
     def __init__(self):
         self.__dataset = None
+# end __init__ method
 
     def dataset(self) -> List[List]:
         """Cached dataset
@@ -37,41 +60,97 @@ class Server:
             self.__dataset = dataset[1:]
 
         return self.__dataset
+# end dataset method
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
+        """ get page of dataset
+
+        Args:
+            page (int, optional): current page number / or starting page.
+            Defaults to 1.
+            page_size (int, optional): number of items per page.
+            Defaults to 10.
+
+        Returns:
+            List[List]: _description_
         """
-        -Uses assert to verify that both arguments are ints > 0
-        -Uses index_range to find correct indexes to paginate the dataset
-        and return the appropriate page of the dataset (i.e. the list of rows)
-        -Return an empty list if passed arguments are out of range
-        """
+        # check if page and page_size are valid integers > 0
         assert isinstance(page, int) and page > 0
         assert isinstance(page_size, int) and page_size > 0
 
-        start, end = index_range(page, page_size)
-
-        if start >= len(self.dataset()):
+        # check if dataset is empty
+        if self.dataset() is None:
             return []
 
-        return self.dataset()[start:end]
+        # get start and end index for pagination using index_range
+        start_index, end_index = index_range(page, page_size)
+        # store dataset in variable
+        dataset = self.dataset()
 
-    def get_hyper(self, page: int = 1, page_size: int = 10):
-        """
-        Returns a dictionary containing the following key-value pairs:
-        -page_size: the length of the returned dataset page
-        -page: the current page number
-        -data: the dataset page (equivalent to return from previous task)
-        -next_page: number of the next page, None if no next page
-        -prev_page: number of the previous page, None if no previous page
-        -total_pages: the total number of pages in the dataset as an integer
-        Make sure to reuse get_page in your implementation
-        """
-        my_dataset = self.get_page(page, page_size)
+        # return empty list if start_index is greater than dataset length
+        if start_index >= len(dataset):
+            return []
 
+        # return dataset list from start_index to
+        # min(end_index, dataset length)
+        # use min to avoid index out of range error
+        # min will return the smallest value
+        # if end_index is greater than dataset length
+        return dataset[start_index:min(end_index, len(dataset))]
+# end  get_page method
+
+    def get_hyper(self, page: int = 1, page_size: int = 10) -> Dict:
+        """ get page of dataset with hypermedia pagination
+
+        Args:
+            page (int, optional): current page number / or starting page.
+            Defaults to 1.
+            page_size (int, optional): number of items per page.
+            Defaults to 10.
+
+        Returns:
+            Dictionary containing the following key-value pairs:
+            page_size: the length of the returned dataset page
+            page: the current page number
+            data: the dataset page (equivalent to return from previous task)
+            next_page: number of the next page, None if no next page
+            prev_page: number of the previous page, None if no previous page
+            total_pages: the total number of pages in the dataset as an integer
+
+        """
+        # check if page and page_size are valid integers > 0
+        assert isinstance(page, int) and page > 0
+        assert isinstance(page_size, int) and page_size > 0
+
+        # check if dataset is empty
+        if self.dataset() is None:
+            return []
+
+        # get start and end index for pagination using index_range
+        start_index, end_index = index_range(page, page_size)
+        # store dataset in variable
+        dataset = self.dataset()
+
+        # return empty list if start_index is greater than dataset length
+        if start_index >= len(dataset):
+            return []
+
+        # return dataset list from start_index to
+        # min(end_index, dataset length)
+        # use min to avoid index out of range error
+        # min will return the smallest value
+        # if end_index is greater than dataset length
+        data = dataset[start_index:min(end_index, len(dataset))]
+        # get total number of pages
+        total_pages = math.ceil(len(dataset) / page_size)
+
+        # return list of data and hypermedia pagination
         return {
-            "page_size": page_size,
+            "page_size": len(data),
             "page": page,
-            "data": my_dataset[0:],
-            "next_page": None if len(my_dataset) < page_size else page + 1,
-            "prev_page": None if page <= 1 else page - 1,
-            "total_pages": math.ceil(len(self.dataset()) / page_size)
+            "data": data,
+            "next_page": page + 1 if page < total_pages else None,
+            "prev_page": page - 1 if page > 1 else None,
+            "total_pages": total_pages
+        }
+# end get_hyper method
