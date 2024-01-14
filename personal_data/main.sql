@@ -8,7 +8,17 @@ USE my_db;
 
 DROP TABLE IF EXISTS users;
 CREATE TABLE users (
-    email VARCHAR(256)
+    name VARCHAR(256),
+    email VARCHAR(256),
+    phone INT,
+    ssn INT,
+    password VARCHAR(256),
+    ip VARCHAR(256),
+    last_login INT,
+    user_agent VARCHAR(256));
+
+
+
 );
 
 INSERT INTO users(email) VALUES ("bob@dylan.com");
