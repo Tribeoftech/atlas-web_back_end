@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
-"""Update the class to accept a list of strings fields
+"""
+Update the class to accept a list of strings fields
 constructor argument. Implement the format method to
 filter values in incoming log records using filter_datum.
 Values for fields in fields should be filtered
 Do NOT extrapolate FORMAT manually. The format method
-should be less than 5 lines"""
+should be less than 5 lines
+"""
 
 from typing import List
 import logging
