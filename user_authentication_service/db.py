@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-odule that handles the database engine/session
+Mod handles the database engine
 
-Handles user data
+Handles data
 """
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
