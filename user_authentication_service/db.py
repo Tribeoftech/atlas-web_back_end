@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Module that handles the database engine/session
+odule that handles the database engine/session
 
 Handles user data
 """
