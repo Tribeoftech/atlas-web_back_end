@@ -1,4 +1,4 @@
-# user_authentication
+#!## user_authentication
 """"Flask app and user db integeation"""
 Flask Authentication Project
 This project is designed for learning purposes to understand the implementation of authentication mechanisms in a Flask app.
