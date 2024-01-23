@@ -2,7 +2,6 @@
 """user.py file defines the User class"""
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
-from user import User 
 
 Base = declarative_base()
 
