@@ -14,5 +14,5 @@ def index():
     """
     First get endpoint
     """
-    eturn jsonify({"message": "Bienvenue"})
+   return jsonify({"message": "Bienvenue"})
 
