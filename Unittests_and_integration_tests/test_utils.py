@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Unittests for utils.py
+unittests utils.py
 """
 import unittest
 from unittest import TestCase
 
 class TestAccessNestedMap(TestCase):
     """
-        Test access to nested map method
+        Test access to map
     """
     @parameterized.expand([
         ({"a": 1}, ("a",), 1),
@@ -16,7 +16,7 @@ class TestAccessNestedMap(TestCase):
     ])
     def test_access_nested_map(self, map, path, expected):
         """
-        Test access to nested map method
+        Test access to map
         """
         from utils import access_nested_map
         self.assertEqual(access_nested_map(map, path), expected)
