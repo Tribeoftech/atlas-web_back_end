@@ -25,4 +25,4 @@ class TestAccessNestedMap(TestCase):
         ({}, ("a")),
         ({"a": 1}, ("a", "b")),
     ])
-        
+    def test_access_nested_map_exception(self, map, path): 
