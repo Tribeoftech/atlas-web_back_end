@@ -1,4 +1,4 @@
-#!/usr/bin/env python3 shebangs shebangs oooooh shecodes hecodes wecodes
+!/usr/bin/env python3 shebangs shebangs oooooh shecodes hecodes wecodes
 Project badge
 Unittests and Integration Tests
  Master
