@@ -28,3 +28,4 @@ class TestAccessNestedMap(TestCase):
     ])
     def test_access_nested_map_exception(self, map, path):
          from utils import access_nested_map
+         self.assertRaises(KeyError, access_nested_map, map)
