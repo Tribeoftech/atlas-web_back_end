@@ -20,3 +20,9 @@ class TestAccessNestedMap(TestCase):
         """
         from utils import access_nested_map
         self.assertEqual(access_nested_map(map, path), expected)
+        
+        @parameterized.expand([
+        ({}, ("a")),
+        ({"a": 1}, ("a", "b")),
+    ])
+        
