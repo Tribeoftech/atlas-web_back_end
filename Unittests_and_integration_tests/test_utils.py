@@ -1,6 +1,17 @@
 #!/usr/bin/env python3
 """
-Unittests for utils.py
+Unittest for utils.py
 """
 import unittest
-from unittest import TestCase
+import unittest import TestCase
+
+class TestAccessNestedMap(TestCase):
+   """
+   Test access to nestedmap
+   """
+   @parameterized.expand([
+       ({"a": 1}, ("a",), 1),
+       ({"a": {"b": 2}}, ("a", ), {"b": 2}),
+       ({"a": {"b": 2}}, ("a", "b"), 2),
+   ])
+
