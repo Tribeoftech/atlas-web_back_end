@@ -1,5 +1,4 @@
-#!/usr/bin/env python3 shebangs shebangs oooooh shecodes hecodes wecodes
-Project badge
+
 Unittests and Integration Tests
  Master
  By: Emmanuel Turlay, Staff Software Engineer at Cruise
