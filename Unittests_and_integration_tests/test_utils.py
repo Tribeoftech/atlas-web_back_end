@@ -14,4 +14,8 @@ class TestAccessNestedMap(TestCase):
        ({"a": {"b": 2}}, ("a", ), {"b": 2}),
        ({"a": {"b": 2}}, ("a", "b"), 2),
    ])
-
+   def test_access_nested_map(self, map, path, expected):
+       """
+       Test access
+       """
+       from utils import access_nested_map
