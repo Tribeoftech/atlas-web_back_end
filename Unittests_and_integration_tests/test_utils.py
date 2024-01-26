@@ -3,3 +3,4 @@
 Unittests for utils.py
 """
 import unittest
+from unittest import TestCase
