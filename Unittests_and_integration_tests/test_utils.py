@@ -39,14 +39,14 @@ class TestAccessNestedMap(TestCase):
         ("http://example.com", {"payload": True}),
         ("http://holberton.io", {"payload": False}),
     ])    
-    def test_get_json(self, test_url, test_payload): 
+        def test_get_json(self, test_url, test_payload): 
         from utils import get_json
         import requests
         from unittest import mock
         with mock.patch('requests.get', return_value=mock.Mock(
                 json=lambda: test_payload)):
             self.assertEqual(get_json(test_url), test_payload)
-class TestMemoize(unittest.TestCase):
+    class TestMemoize(unittest.TestCase):
     """ This is a class that holds methods for testing the utils.memoize """
 
     def test_memoize(self):
@@ -69,5 +69,5 @@ class TestMemoize(unittest.TestCase):
             fn.assert_called_once()
 
 
-if __name__ == '__main__':
+    if __name__ == '__main__':
     unittest.main()
