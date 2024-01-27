@@ -36,4 +36,5 @@ class TestAccessNestedMap(TestCase):
         ("http://holberton.io", {"payload": False}),
     ])    
     def test_get_json(self, test_url, test_payload): 
-        
+        from utils import get_json
+        import requests
