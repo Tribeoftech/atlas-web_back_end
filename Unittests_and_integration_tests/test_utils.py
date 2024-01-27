@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-"""
-unittests utils.py
-"""
+
 import unittest
 from unittest import TestCase
 from unittest.mock import patch
