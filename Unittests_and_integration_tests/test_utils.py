@@ -42,3 +42,28 @@ class TestAccessNestedMap(TestCase):
         with mock.patch('requests.get', return_value=mock.Mock(
                 json=lambda: test_payload)):
             self.assertEqual(get_json(test_url), test_payload)
+class TestMemoize(unittest.TestCase):
+    """ This is a class that holds methods for testing the utils.memoize """
+
+    def test_memoize(self):
+        """ This method tests utils.memoize """
+        class TestClass:
+            """ This class holds a method of memoization """
+
+            def a_method(self):
+                """ This is the mock method """
+                return 42
+
+            @memoize
+            def a_property(self):
+                """ This is the mock property with mock method's value """
+                return self.a_method()
+        with mock.patch.object(TestClass, 'a_method') as fn:
+            tc = TestClass()
+            tc.a_property
+            tc.a_property
+            fn.assert_called_once()
+
+
+if __name__ == '__main__':
+    unittest.main()
