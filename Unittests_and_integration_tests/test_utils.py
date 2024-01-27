@@ -30,4 +30,8 @@ class TestAccessNestedMap(TestCase):
          from utils import access_nested_map
          self.assertRaises(KeyError, access_nested_map, map, path)
          
-    class TestGetJson(TestCase):     
+    class TestGetJson(TestCase):
+        @parameterized.expand([
+        ("http://example.com", {"payload": True}),
+        ("http://holberton.io", {"payload": False}),
+    ])     
