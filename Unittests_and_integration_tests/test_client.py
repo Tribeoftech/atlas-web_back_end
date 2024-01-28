@@ -1,13 +1,43 @@
 #!/usr/bin/env python3
 """
-unittest for client.py
+test gitclient
 """
-TestGithubOrgClient(unittest.TestCase)
-    
-@parameterized.expand([testcase.TestCase])
-def test_get_json(self, test_url, test_payload):
- """
- Test get_json method
- """
- from client import get_json
- self.assertEqual(get_json(test_url, test_payload), test_payload)
+import unittest
+from unittest.mock import patch, PropertyMock
+from parameterized import parameterized
+from parameterized import parameterized_class
+from client import GithubOrgClient
+from urllib.error import HTTPError
+from fixtures import *
+
+
+class TestGithubOrgClient(unittest.TestCase):
+    """
+    test client
+    """
+    @parameterized.expand([
+        ("google"),
+        ("abc"),
+    ])
+    @patch("client.get_json", return_value={"payload": True})
+    def test_org(self, org, mock_get_json):
+        """
+        test GithubOrgClient.org
+        """
+        client = GithubOrgClient(org)
+        client_return = client.org
+        self.assertEqual(client_return, mock_get_json.return_value)
+
+    def test_public_repos_url(self):
+        """
+        test GithubOrgClient.public
+        """
+        with patch.object(GithubOrgClient,
+                          "org",
+                          new_callable=PropertyMock,
+                          return_value={"repos_url": "holberton"}) as mock_org:
+            test_json = {"repos_url": "holberton"}
+            test_client = GithubOrgClient(test_json.get("repos_url"))
+            test_return = test_client._public_repos_url
+            self.assertEqual(
+                test_return, mock_org.return_value.get("repos_url"))
