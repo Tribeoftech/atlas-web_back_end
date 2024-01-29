@@ -65,3 +65,8 @@ class TestGithubOrgClient(unittest.TestCase):
         test_client = GithubOrgClient("holberton")
         test_return = test_client.has_license(repo, license_key)
         self.assertEqual(test_return, expected)
+    
+    @parameterized_class(
+    ("org_payload", "repos_payload", "expected_repos", "apache2_repos"),
+    TEST_PAYLOAD
+)
