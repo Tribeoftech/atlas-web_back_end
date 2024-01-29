@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 """
-basic babel flask app.
+Basic babel flask app.
 
-Uses config for flask app.
+Uses Config to set Babel's default local <en>
+and timezone <UTC>
+
+Uses that class as config for flask app.
 """
 from flask import Flask, request, g
 from flask_babel import Babel
@@ -14,8 +17,8 @@ from flask.templating import render_template
 # Set up Flask app and tend to baby checker
 app = Flask(__name__)
 babel = Babel(app)
-_.__doc__ = "what up checker."
-""" what up checker """
+_.__doc__ = "Nice one, checker."
+""" Tend to Turlay """
 
 
 # simulate database
@@ -30,7 +33,7 @@ users = {
 # Simple Class to set Babel's default local and timezone
 class Config():
     """
-    configure Babel
+    Configure Babel.
     """
     LANGUAGES = ['en', 'fr']
     BABEL_DEFAULT_LOCALE = 'en'
@@ -47,13 +50,13 @@ def get_locale():
     """
     Get locale from request.
 
-    Users prefferences:
+    Use a <user>'s preferred local if it is supported
 
-    Order of precedence:
-        - Locale from URL
-        - Locale from user
-        - Locale from RH
-        - locale
+    Order of priority:
+        - Locale from URL parameters
+        - Locale from user settings
+        - Locale from request header
+        - Default locale
     """
     locale = request.args.get('locale')
     if locale and locale in Config.LANGUAGES:
@@ -71,13 +74,14 @@ def get_locale():
 @babel.timezoneselector
 def get_timezone():
     """
-    find zone in URL
+    Find timezone parameter in URL
 
-    find zone from user
+    Find time zone from user settings
 
-    default UTC
+    Default to UTC
 
-    validate
+    Validate valid time zones. Uses pytz.timezone to catch
+    pytz.exceptions.UnknownTimeZoneError
     """
     timezone = request.args.get('timezone')
     if timezone:
@@ -90,13 +94,15 @@ def get_timezone():
     except pytz.exceptions.UnknownTimeZoneError:
         return 'UTC'
 
-
+# simulate getting user from databse
 def get_user():
-
-
+    """
+    Returns user dictionary or None if ID cannot be found or
+    if <login_as> was not passed.
+    """
     user_id = request.args.get('login_as')
     if not user_id:
-    return None
+        return None
     try:
         user_id = int(user_id)
         if user_id < 1 or user_id > 4:
@@ -106,10 +112,12 @@ def get_user():
     return users[user_id]
 
 
+# loads user before page is rendered, ignore empty line below :(
+
 @app.before_request
 def before_request():
     """
-    Uses get_user() to find a user, and set user.
+    Uses get_user() to find a user, if any, and set it as g.user.
     """
     data = get_user()
     if data:
