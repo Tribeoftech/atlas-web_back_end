@@ -41,3 +41,6 @@ class TestGithubOrgClient(unittest.TestCase):
             test_return = test_client._public_repos_url
             self.assertEqual(
                 test_return, mock_org.return_value.get("repos_url"))
+            
+            @patch("client.get_json", return_value=[{"name": "holberton"}])
+    def test_public_repos(self, mock_get_json):
