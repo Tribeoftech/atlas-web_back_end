@@ -50,8 +50,8 @@ def get_locale():
     Users prefferences:
 
     Order of precedence:
-        - Locale from URL 
-        - Locale from user 
+        - Locale from URL
+        - Locale from user
         - Locale from RH
         - locale
     """
@@ -77,7 +77,7 @@ def get_timezone():
 
     default UTC
 
-    validate 
+    validate
     """
     timezone = request.args.get('timezone')
     if timezone:
@@ -92,9 +92,10 @@ def get_timezone():
 
 # simulate getting user from databse
 def get_user():
-    """
-    returns user dictionary 
-    """
+    
+"""
+returns user dictionary 
+"""
     user_id = request.args.get('login_as')
     if not user_id:
         return None
