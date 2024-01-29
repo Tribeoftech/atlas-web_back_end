@@ -27,7 +27,7 @@ users = {
 
 # Simple Class to set Babel's default local and timezone
 class Config():
-    
+
     LANGUAGES = ['en', 'fr']
     BABEL_DEFAULT_LOCALE = 'en'
     BABEL_DEFAULT_TIMEZONE = 'UTC'
@@ -40,7 +40,7 @@ app.config.from_object(Config)
 # Determins if en or fr
 @babel.localeselector
 def get_locale():
-   
+
     locale = request.args.get('locale')
     if locale and locale in Config.LANGUAGES:
         return locale
@@ -56,7 +56,7 @@ def get_locale():
 # uses same logic as locale selector but for timezone
 @babel.timezoneselector
 def get_timezone():
- 
+
     timezone = request.args.get('timezone')
     if timezone:
         return timezone
@@ -70,7 +70,8 @@ def get_timezone():
 
 # simulate getting user from databse
 def get_user():
-   
+
+
     user_id = request.args.get('login_as')
     if not user_id:
         return None
@@ -87,7 +88,7 @@ def get_user():
 
 @app.before_request
 def before_request():
-   
+
     data = get_user()
     if data:
         g.user = data
