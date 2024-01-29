@@ -2,7 +2,7 @@
 """
  babel flask app.
 
-Uses Config set Babel default local <en> 
+Uses Config set Babel default local <en>
 
 Uses class 4 flask app.
 """
@@ -44,3 +44,4 @@ def index():
 
 if __name__ == '__main__':
     app.run()
+    
