@@ -48,3 +48,5 @@ class TestGithubOrgClient(unittest.TestCase):
                           "_public_repos_url",
                           new_callable=PropertyMock,
                           return_value="https://api.github.com/") as m:
+              test_client = GithubOrgClient("holberton")
+              test_return = test_client.public_repos()
