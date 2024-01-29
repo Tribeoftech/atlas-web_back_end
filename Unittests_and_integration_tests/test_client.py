@@ -70,3 +70,11 @@ class TestGithubOrgClient(unittest.TestCase):
     ("org_payload", "repos_payload", "expected_repos", "apache2_repos"),
     TEST_PAYLOAD
 )
+    class TestIntegrationGithubOrgClient(unittest.TestCase):
+        """
+    Integration test for public_repos method
+    """
+    @classmethod
+    def setUpClass(cls):
+        """ Part of TestCase API """
+        cls.get_patcher = patch('requests.get', side_effect=HTTPError)
