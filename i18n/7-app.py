@@ -68,10 +68,9 @@ def get_timezone():
     except pytz.exceptions.UnknownTimeZoneError:
         return 'UTC'
 
+
 # simulate getting user from databse
 def get_user():
-
-
     user_id = request.args.get('login_as')
     if not user_id:
         return None
