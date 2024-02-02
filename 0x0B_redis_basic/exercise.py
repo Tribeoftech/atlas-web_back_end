@@ -4,3 +4,6 @@ Redis
 """
 import redis
 import uuid
+
+
+class Cache():
