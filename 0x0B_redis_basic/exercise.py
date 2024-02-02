@@ -3,3 +3,4 @@
 Redis
 """
 import redis
+import uuid
