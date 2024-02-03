@@ -1,6 +1,8 @@
+"""Initializes the Cache class
+
+Creates a Redis client object and flushes the database."""
 #!/usr/bin/env python3
-"""
-Redis
+Redis client object."""
 """
 import redis
 import uuid
