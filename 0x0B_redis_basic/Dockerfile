@@ -66,7 +66,7 @@ RUN pip3 install requests
 RUN pip3 install beautifulsoup4
 
 # bcrypt
-RUN pip3 install bcrypt
+#RUN pip3 install bcrypt 
 
 # MySQL connector
 RUN pip3 install mysql-connector-python
