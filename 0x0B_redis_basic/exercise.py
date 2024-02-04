@@ -8,8 +8,12 @@ import redis
 import uuid
 
 
-class Cache():
 
- def __init__(self):
+class Cache():
+"""
+Initializes a Cache instance.
+Creates a Redis client and flushes the database to clear any existing keys.
+"""
+def __init__(self):
         self._redis = redis.Redis()
         self._redis.flushdb()
