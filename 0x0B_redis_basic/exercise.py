@@ -1,9 +1,8 @@
-"""Initializes the Cache class
-
-Creates a Redis client object and flushes the database."""
 #!/usr/bin/env python3
-Redis client object."""
+"""Initializes the Cache class
+Creates a Redis client object and flushes the database.
 """
+
 import redis
 import uuid
 from typing import Union, Callable
@@ -33,3 +32,4 @@ def wrapper(*args, **kwargs):
     self.redis.rpush(f"{key}:outputs", str(output))
 
     return output
+
