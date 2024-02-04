@@ -4,7 +4,7 @@ Redis basic
  Weight: 1
  Your score will be updated as you progress.
 
-wild
+wild being in the action
 Resources
 Read or watch:
 
