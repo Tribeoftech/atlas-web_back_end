@@ -23,3 +23,12 @@ def count_calls(method: Callable) -> Callable
 Increments a counter each time the decorated function is called and stores
 the count in a Redis hash using the function's qualified name as the key.
 """
+@wraps
+def wrapper(*args, **kwargs):
+    key = f"{instance.__class__.__name__}.{method.__name__}"
+    inputs = inspect.signature(method).bind(instance, *args, **kwargs).arguments
+    self.redis.rpush(f"{key}:inputs", str(inputs))
+    output = method(instance, *args, **kwargs)
+    self.redis.rpush(f"{key}:outputs", str(output))
+
+    return output
