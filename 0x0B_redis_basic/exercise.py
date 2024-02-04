@@ -17,3 +17,5 @@ Creates a Redis client and flushes the database to clear any existing keys.
 def __init__(self):
         self._redis = redis.Redis()
         self._redis.flushdb()
+        
+def count_calls(method: Callable) -> Callable:
