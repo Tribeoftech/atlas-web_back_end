@@ -6,7 +6,8 @@ Redis client object."""
 """
 import redis
 import uuid
-
+from typing import Union, Callable
+from functools import wraps
 
 
 class Cache():
