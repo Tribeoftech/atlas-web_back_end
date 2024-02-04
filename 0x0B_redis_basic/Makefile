@@ -1,15 +1,31 @@
-CXX = g++
-CXXFLAGS = -Wall -Werror -Wextra -pedantic -std=c++17 -g -fsanitize=address
-LDFLAGS =  -fsanitize=address
+# Makefile for Docker
 
-SRC = 
-OBJ = $(SRC:.cc=.o)
-EXEC = main
+# Variables
+DOCKER_IMAGE_NAME = redis
+DOCKER_CONTAINER_NAME = redis_container
+HOST_DIRECTORY=./
+CONTAINER_DIRECTORY=/0x0B_redis_basic
+.PHONY: build run exec stop clean
 
-all: $(EXEC)
+# Build the Docker image
+build:
+	docker build -t $(DOCKER_IMAGE_NAME) .
 
-$(EXEC): $(OBJ)
-	$(CXX) $(LDFLAGS) -o $@ $(OBJ) $(LBLIBS)
+# Run the Docker container with directory binding
+run:
+	docker run -d --name $(DOCKER_CONTAINER_NAME) -v ${HOST_DIRECTORY}:${CONTAINER_DIRECTORY} ${DOCKER_IMAGE_NAME}
 
+# Execute a command inside the Docker container
+exec:
+	docker exec -it $(DOCKER_CONTAINER_NAME) bash
+
+# Stop and remove the Docker container
+stop:
+	docker stop $(DOCKER_CONTAINER_NAME)
+	docker rm $(DOCKER_CONTAINER_NAME)
+
+# Clean up Docker images and containers
 clean:
-	rm -rf $(OBJ) $(EXEC)
+	docker stop $(DOCKER_CONTAINER_NAME) || true
+	docker rm $(DOCKER_CONTAINER_NAME) || true
+	docker rmi $(DOCKER_IMAGE_NAME) || true
