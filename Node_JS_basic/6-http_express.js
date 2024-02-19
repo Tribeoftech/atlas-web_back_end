@@ -1,5 +1,5 @@
 /**
- * Starts an Express server listening on the given port. 
+ * Starts an Express server listening on the given port.
  * Logs a message when the server starts.
  */
 const express = require('express');

@@ -8,25 +8,25 @@ const fs = require('fs').promises;
 const countStudents = async (path) => {
   let fileData;
   try {
-    fileData = await fs.readFile(path, "utf8");
+    fileData = await fs.readFile(path, 'utf8');
   } catch (err) {
-    throw new Error("Cannot load the database");
+    throw new Error('Cannot load the database');
   }
-  console.log(`Number of students: ${fileData.split("\n").length - 2}`);
-  const fields = fileData.split("\n").map((line) => line.split(",")[3]);
+  console.log(`Number of students: ${fileData.split('\n').length - 2}`);
+  const fields = fileData.split('\n').map((line) => line.split(',')[3]);
   const uniqueFields = [...new Set(fields)];
   const dict = {};
   for (let i = 0; i < uniqueFields.length; i += 1) {
     const studentsInField = fileData
-      .split("\n")
+      .split('\n')
       .filter((line) => line.includes(uniqueFields[i])).length;
     const studentsInFieldList = fileData
-      .split("\n")
+      .split('\n')
       .filter((line) => line.includes(uniqueFields[i]))
-      .map((line) => line.split(",")[0]);
-    const studentsInFieldListString = studentsInFieldList.join(", ");
+      .map((line) => line.split(',')[0]);
+    const studentsInFieldListString = studentsInFieldList.join(', ');
     console.log(
-      `Number of students in ${uniqueFields[i]}: ${studentsInField}. List: ${studentsInFieldListString}`
+      `Number of students in ${uniqueFields[i]}: ${studentsInField}. List: ${studentsInFieldListString}`,
     );
     dict[uniqueFields[i]] = {
       num: studentsInField,

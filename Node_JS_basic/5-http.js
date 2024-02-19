@@ -1,6 +1,6 @@
 /**
  * Exports an HTTP server app that handles requests and responses.
- * 
+ *
  * Creates the HTTP server with http.createServer, handling requests and responses.
  * Implements route handling for '/' and '/students' paths.
  * Calls async utility functions like countStudents() to get data.
@@ -19,24 +19,24 @@ const countStudents = require('./3-read_file_async');
  */
 const app = http
   .createServer(async (req, res) => {
-    if (req.method === "GET") {
-      if (req.url === "/") {
-        res.end("Hello Holberton School!");
-      } else if (req.url === "/students") {
+    if (req.method === 'GET') {
+      if (req.url === '/') {
+        res.end('Hello Holberton School!');
+      } else if (req.url === '/students') {
         await countStudents(process.argv[2])
           .then((data) => {
-            res.write("This is the list of our students\n");
+            res.write('This is the list of our students\n');
             res.write(`Number of students: ${data.CS.num + data.SWE.num}\n`);
             res.write(
-              `Number of students in CS: ${data.CS.num}. List: ${data.CS.list}\n`
+              `Number of students in CS: ${data.CS.num}. List: ${data.CS.list}\n`,
             );
             res.write(
-              `Number of students in SWE: ${data.SWE.num}. List: ${data.SWE.list}`
+              `Number of students in SWE: ${data.SWE.num}. List: ${data.SWE.list}`,
             );
             res.end();
           })
           .catch((err) => {
-            res.write("This is the list of our students\n");
+            res.write('This is the list of our students\n');
             res.end(err.message);
           });
       }
