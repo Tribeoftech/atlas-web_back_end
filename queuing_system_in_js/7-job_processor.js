@@ -1,35 +1,40 @@
-const kue = require('kue');
+/**
+ * blacklist: An array of phone numbers that should be blocked from receiving notifications.
+ */
+const kue = require("kue");
 
-// add blacklisted numbers in array
-const blacklist = [
-	'4153518780',
-	'4153518781',
-];
+const blacklist = ["4153518780", "4153518781"];
 
+/**
+ * Sends a notification to the given phone number with the provided message.
+ * The notification is sent asynchronously via the done callback.
+ *
+ * The phone number is checked against a blacklist first - if it's blacklisted,
+ * an error is passed to the done callback instead of sending the notification.
+ *
+ * Progress events are emitted on the job during notification sending.
+ */
 function sendNotification(phoneNumber, message, job, done) {
-	// on function call, track progress of <job> 0 out of 100
-	job.progress(0, 100);
-	// check for blacklisted number
-	if (blacklist.includes(phoneNumber)) {
-		// if blacklisted, throw error
-		done(Error(`Phone number ${phoneNumber} is blacklisted`));
-		return;
-	}
-	// track progress of <job> 50 out of 100
-	job.progress(50, 100);
-	// log notification
-	console.log(`Sending notification to ${phoneNumber}, with message: ${message}`);
-	// use done argument to indicate success
-	done();
+  job.progress(0, 100);
+  if (blacklist.includes(phoneNumber)) {
+    done(Error(`Phone number ${phoneNumber} is blacklisted`));
+    return;
+  }
+  job.progress(50, 100);
+  console.log(
+    `Sending notification to ${phoneNumber}, with message: ${message}`
+  );
+  done();
 }
 
-// create kue queue that will proceed job of the queue 'push_notification_code_2'
-// with two jobs at the same time
+/**
+ * Configures a Kue queue with the given name to process jobs, with concurrency of 2.
+ * Registers a handler function to send push notifications for each job,
+ * checking the phone number against a blacklist first before sending.
+ */
 const queue = kue.createQueue();
-const queueKey = 'push_notification_code_2';
+const queueKey = "push_notification_code_2";
 
-// process two jobs at the same time
 queue.process(queueKey, 2, (job, done) => {
-	// call function sendNotification with job data
-	sendNotification(job.data.phoneNumber, job.data.message, job, done);
+  sendNotification(job.data.phoneNumber, job.data.message, job, done);
 });

@@ -1,8 +1,8 @@
 /**
  * Creates a job in the kue job queue to send a push notification code to a phone number.
  *
- * @param {Object} jobData - The data for the job. Contains phoneNumber and message properties.
- * @returns {Object} The kue job object.
+ * @param {Object} jobData 
+ * @returns {Object} 
  */
 const kue = require("kue");
 const queue = kue.createQueue();
